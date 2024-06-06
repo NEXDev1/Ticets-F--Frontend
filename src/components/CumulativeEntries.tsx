@@ -180,3 +180,4 @@ const CumulativeEntries: React.FC = () => {
 };
 
 export default CumulativeEntries;
+

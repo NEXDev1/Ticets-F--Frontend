@@ -6,7 +6,7 @@ module.exports = {
   darkMode: 'class',
   theme: {
     fontFamily: {
-      satoshi: ['Satoshi', 'sans-serif'],
+      satoshi: [ 'sans-serif'],
     },
     colors: {
       current: 'currentColor',

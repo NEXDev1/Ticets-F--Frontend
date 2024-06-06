@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { showAlert } from '../components/tosterComponents/tost';
+import { showAlert } from '../components/tosterComponents/tost'; 
 import DataTable, { Column } from 'react-data-table-component';
 import { backend_Url } from '../../src/api/server';
 // import DataTableExtensions from 'react-data-table-component-extensions';
