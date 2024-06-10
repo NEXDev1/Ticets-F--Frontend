@@ -3,8 +3,9 @@
     "composite": true,
     "skipLibCheck": true,
     "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist" // Specify the output directory if needed
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "src"] // Add the source directory (if applicable)
 }

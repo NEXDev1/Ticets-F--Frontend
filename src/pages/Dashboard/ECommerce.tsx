@@ -1,17 +1,17 @@
 // import { showToast, ToastTypes } from "../../components/tosterComponents/tost";
-import { showAlert } from '../../components/tosterComponents/tost'; // Replace with the path to your custom toast component
-import fireToast from '../../hooks/fireToast';
+// import { showAlert } from '../../components/tosterComponents/tost'; // Replace with the path to your custom toast component
+// import fireToast from '../../hooks/fireToast';
 
 const ECommerce = () => {
   const admin = localStorage.getItem('admin');
   const agent = localStorage.getItem('agent');
-  console.log('ecommerceeeeeeeeeeeee');
+  console.log('ecommerce');
 
   const handleButtonClick = () => {
     console.log('Button clicked!');
     // showToast('some message', ToastTypes.ERROR);
     // showAlert('This is an information message!', 'success');
-    fireToast();
+    // fireToast();
   };
 
   return (
