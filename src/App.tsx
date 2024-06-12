@@ -1,3 +1,5 @@
+//App.tsx
+
 import { Suspense, lazy, useEffect, useState } from 'react';
 // import { Route, Router, Routes, useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
