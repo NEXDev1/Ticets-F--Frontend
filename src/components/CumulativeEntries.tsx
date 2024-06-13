@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import DataTable, { Column } from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 // import Pagination from 'react-data-table-component-extensions';
 import { backend_Url } from '../api/server';
 
@@ -88,7 +88,17 @@ const CumulativeEntries: React.FC = () => {
   //   );
   //   return range ? range.color : '';
   // }
+  type Column<T> = {
+    name: string;
+    selector: (row: T, index?: number) => any;
+    sortable?: boolean;
+  };
 
+  // Example row data type
+  type RowData = {
+    _id: any;
+    total: any;
+  };
   const columns: Column<any>[] = [
     {
       name: 'Sl No',
@@ -180,4 +190,3 @@ const CumulativeEntries: React.FC = () => {
 };
 
 export default CumulativeEntries;
-

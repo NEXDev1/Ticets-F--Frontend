@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { user } from '../../redux/reducer/userSlice';
-import DataTable, { Column } from 'react-data-table-component';
+import { User } from '../../redux/reducer/userSlice';
+import DataTable from 'react-data-table-component';
 import { backend_Url } from '../../api/server';
 
 const DashboardAgent: React.FC = () => {
@@ -12,7 +12,12 @@ const DashboardAgent: React.FC = () => {
   const [list, setList] = useState<any[]>([]);
   const [reFetch, setReFetch] = useState<boolean>(false);
 
- 
+  type Column<T> = {
+    name: string; // Name of the column header
+    selector: (row: T) => any; // Selector function to extract data from each row
+    sortable?: boolean; // Optional flag indicating if column is sortable
+    cell?: (row: T) => React.ReactNode; // Optional cell renderer for custom content in cells
+  };
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -134,7 +139,7 @@ const DashboardAgent: React.FC = () => {
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-     < h2 className="text-2xl font-bold mb-4">Tokens</h2>
+      <h2 className="text-2xl font-bold mb-4">Tokens</h2>
 
       <DataTable
         columns={columns}
@@ -149,3 +154,7 @@ const DashboardAgent: React.FC = () => {
 };
 
 export default DashboardAgent;
+function user(state: unknown): unknown {
+  throw new Error('Function not implemented.');
+}
+

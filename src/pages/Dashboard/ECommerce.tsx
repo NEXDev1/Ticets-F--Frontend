@@ -2,6 +2,8 @@
 // import { showAlert } from '../../components/tosterComponents/tost'; // Replace with the path to your custom toast component
 // import fireToast from '../../hooks/fireToast';
 
+import React from "react";
+
 const ECommerce = () => {
   const admin = localStorage.getItem('admin');
   const agent = localStorage.getItem('agent');

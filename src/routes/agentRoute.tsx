@@ -6,6 +6,7 @@ import Loader from '../common/Loader';
 import agentRouteSet from './agent';
 // import EntityForm from '../pages/Form/EntityForm';
 import EntityForm from '../pages/Form/fff';
+import React from 'react';
 // import DashboardAgent from '../pages/Agent/AgentDashboard';
 
 const DefaultLayout = lazy(() => import('../layout/DefaultLayout'));

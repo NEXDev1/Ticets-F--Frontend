@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { showAlert } from '../components/tosterComponents/tost';
 import { backend_Url } from '../../src/api/server';
-import DataTable, { Column } from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router-dom';
 
 interface Person {
@@ -15,9 +15,22 @@ interface Person {
   _id: string;
   username: string;
   date: string;
-  
 }
 
+type RowData = {
+  index: number;
+  name: string;
+  formattedDate: string;
+  drawTime: string;
+  token: any;
+  _id: string;
+};
+type Column<T> = {
+  name: string;
+  selector?: (row: T, index?: number) => any;
+  cell?: (row: T) => React.ReactNode;
+  sortable?: boolean;
+};
 interface DrawTime {
   _id: string;
   drawTime: string;
@@ -154,8 +167,9 @@ const OrderList: React.FC = () => {
       cell: (row: {
         token: any;
         drawTime: any;
-        formattedDate: any; _id: string 
-}) => (
+        formattedDate: any;
+        _id: string;
+      }) => (
         <div className="flex items-center justify-center">
           <button
             onClick={() => deleteEntry(row._id)}
@@ -165,7 +179,13 @@ const OrderList: React.FC = () => {
           </button>
           <button
             onClick={() =>
-              navigate('/admin/orderlist/listTokens', { state: { token: row.token ,drawTime:row.drawTime,date:row.formattedDate} })
+              navigate('/admin/orderlist/listTokens', {
+                state: {
+                  token: row.token,
+                  drawTime: row.drawTime,
+                  date: row.formattedDate,
+                },
+              })
             }
             style={{ marginRight: '10px' }}
           >
@@ -197,14 +217,13 @@ const OrderList: React.FC = () => {
     formattedDate: formatDate(person.date),
     drawTime: person.drawTime,
     _id: person._id,
-    token:person.token,
+    token: person.token,
   }));
 
   return (
     <div className="container mx-auto mt-8">
       <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-       
-      <h2 className="text-2xl font-bold mb-4">Order List</h2>
+        <h2 className="text-2xl font-bold mb-4">Order List</h2>
         <div className="flex flex-col md:flex-row justify-end">
           <div className="mb-5 md:mr-5">
             <input

@@ -1,4 +1,5 @@
 // import Breadcrumb from '../components/Breadcrumb';
+import React from 'react';
 import CoverOne from '../images/cover/cover-01.png';
 import userSix from '../images/user/user-06.png';
 

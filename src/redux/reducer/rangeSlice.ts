@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 
-interface Range {
+export interface Range {
   _id: string;
   startRange: number;
   endRange: number;
@@ -9,7 +9,7 @@ interface Range {
   date: Date;
 }
 
-interface RangeState {
+export interface RangeState {
   rangeList: Range[];
 }
 

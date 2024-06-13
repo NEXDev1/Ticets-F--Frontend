@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../images/logo/logo-icon.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import DropdownUser from './DropdownUser';
+import React from 'react';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;

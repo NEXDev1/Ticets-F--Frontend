@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { showAlert } from '../../components/tosterComponents/tost';
 import { backend_Url } from '../../api/server';
-import DataTable, { Column } from 'react-data-table-component';
+import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
@@ -25,6 +25,12 @@ interface DrawTime {
   _id: string;
   drawTime: string;
 }
+type Column<T> = {
+  name: string; // Column header name
+  selector: (row: T) => any; // Selector function to extract data from row
+  sortable?: boolean; // Optional flag for sorting capability
+  cell?: (row: T) => React.ReactNode; // Optional cell renderer for custom content
+};
 
 const AgentOrderList: React.FC = () => {
   const [people, setPeople] = useState<Person[]>([]);
@@ -36,27 +42,27 @@ const AgentOrderList: React.FC = () => {
   const navigate = useNavigate();
 
   const [selectedPerson, setSelectedPerson] = useState<any | null>(null);
-  const [list, setList] = useState<any[]>([]); 
+  const [list, setList] = useState<any[]>([]);
 
   const handlePrint = (row: { _id: string; token: any }) => {
-    console.log("hii",row);
+    console.log('hii', row);
     const { _id, token } = row;
     if (token && token.length > 0) {
-      const orderId = token[0].orderId; 
-      const orderDetails = list.find((order: { _id: string }) => order._id === orderId);
-  
+      const orderId = token[0].orderId;
+      const orderDetails = list.find(
+        (order: { _id: string }) => order._id === orderId,
+      );
+
       if (orderDetails) {
         setSelectedPerson(orderDetails);
         generatePDF(orderDetails);
       }
     }
   };
-  
- 
 
   const generatePDF = (orderDetails: any) => {
     const pdf = new jsPDF();
-  
+
     const formatDate = (dateString: string) => {
       const options: Intl.DateTimeFormatOptions = {
         year: 'numeric',
@@ -65,7 +71,7 @@ const AgentOrderList: React.FC = () => {
       };
       return new Date(dateString).toLocaleDateString('en-US', options);
     };
-  
+
     const formatTime = (timeString: string) => {
       const options: Intl.DateTimeFormatOptions = {
         hour: 'numeric',
@@ -77,38 +83,37 @@ const AgentOrderList: React.FC = () => {
         options,
       );
     };
-  
- 
+
     pdf.rect(
       5,
       5,
       pdf.internal.pageSize.getWidth() - 10,
       pdf.internal.pageSize.getHeight() - 10,
     );
-  
-    
+
     pdf.setFontSize(16);
     pdf.text('Order Details', pdf.internal.pageSize.getWidth() / 2, 15, {
       align: 'center',
     });
-  
+
     pdf.setFontSize(12);
-  
+
     pdf.text(`Order ID: ${orderDetails._id}`, 10, 30);
     pdf.text(`Date: ${formatDate(orderDetails.date)}`, 10, 40);
     pdf.text(`Draw Time: ${formatTime(orderDetails.drawTime)}`, 10, 50);
-  
+
     // Tokens
     pdf.text('Tokens:', 10, 70);
     orderDetails.token.forEach((token: any, index: number) => {
-      const tokenText = `${index + 1}. Token Number: ${token.tokenNumber}, Count: ${token.count}`;
+      const tokenText = `${index + 1}. Token Number: ${
+        token.tokenNumber
+      }, Count: ${token.count}`;
       pdf.text(tokenText, 10, 80 + index * 10);
     });
-  
+
     // Save the PDF
     pdf.save(`OrderNo_${orderDetails._id}.pdf`);
   };
-  
 
   function getInitialDate() {
     const today = new Date();
@@ -166,9 +171,12 @@ const AgentOrderList: React.FC = () => {
   const deleteEntry = async (id: string) => {
     if (window.confirm('Are you sure you want to delete?')) {
       try {
-        const response = await axios.post(`${backend_Url}/api/agent/delete-entity-agent`, {
-          id,
-        });
+        const response = await axios.post(
+          `${backend_Url}/api/agent/delete-entity-agent`,
+          {
+            id,
+          },
+        );
 
         if (response.data.status === 'success') {
           setReFetch((prev) => !prev);
@@ -222,9 +230,7 @@ const AgentOrderList: React.FC = () => {
     },
     {
       name: 'Action',
-      cell: (row: {
-        [x: string]: any; _id: string; token: any 
-}) => (
+      cell: (row: { [x: string]: any; _id: string; token: any; }) => (
         <div className="flex items-center justify-center">
           <button
             onClick={() => deleteEntry(row._id)}
@@ -233,18 +239,25 @@ const AgentOrderList: React.FC = () => {
             <FontAwesomeIcon icon={faTrash} />
           </button>
           <button
-            onClick={() =>
-              navigate('/listTokens', { state: { token: row.token ,drawTime:row.drawTime,date:row.formattedDate} })
-            }
+            onClick={() => navigate('/listTokens', {
+              state: {
+                token: row.token,
+                drawTime: row.drawTime,
+                date: row.formattedDate,
+              },
+            })}
             style={{ marginRight: '10px' }}
           >
             <FontAwesomeIcon icon={faEye} />
           </button>
           <button onClick={() => handlePrint(row)}>
-          <FontAwesomeIcon icon={faPrint} />
-        </button>
+            <FontAwesomeIcon icon={faPrint} />
+          </button>
         </div>
       ),
+      selector: function (row: any) {
+        throw new Error('Function not implemented.');
+      }
     },
   ];
 

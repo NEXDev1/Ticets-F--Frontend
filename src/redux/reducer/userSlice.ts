@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 
-interface User {
+export interface User {
   _id: string;
   name: string;
   userName: string;
@@ -10,7 +10,7 @@ interface User {
   userRole: number;
 }
 
-interface UserState {
+export interface UserState {
   currentUser: User | null;
   isLoggedIn: boolean;
 }
@@ -44,6 +44,6 @@ const userSlice = createSlice({
 });
 
 export const { loginUser, logoutUser, updateUser } = userSlice.actions;
-export const user = (state: RootState) => state.user.currentUser;
+export const selectUser = (state: RootState) => state.user.currentUser;
 export const selectIsLoggedIn = (state: RootState) => state.user.isLoggedIn;
 export const userReducer = userSlice.reducer;
