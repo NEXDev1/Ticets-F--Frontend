@@ -146,7 +146,7 @@ const EntityForm: React.FC = () => {
       const response = await axios.post(`${backend_Url}/api/agent/add-entity`, {
         _id: _id,
         date: formattedDate,
-        tokenNumber,
+        orderId: tokenNumber,
         count,
         drawTime,
       });
